@@ -29,10 +29,14 @@ De hecho usamos esto para hacer unas pruebas con matrices vacias de distintos ta
 ---
 
 Tamaño - Tiempo que tarda en ejecutarlo
-.4 x 4 - 0s -> Netbeans siendo
-.5 x 5 - 0s -> poco preciso
-.6 x 6 - 5s
-.7 x 7 - +18min (lo paramos porque no terminaba mas)
+
+- 4 x 4 - 0s
+
+- 5 x 5 - 0s
+
+- 6 x 6 - 5s
+
+- 7 x 7 - +18min (lo paramos porque no terminaba mas)
 
 ---
 
