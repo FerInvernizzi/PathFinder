@@ -7,26 +7,10 @@ public class AutoPathing {
     public static void main(String[] args) {
 
         //Mapa de prueba
-        int[][] coor = {
-            {8, 9},
-            {1, 8}, {2, 8}, {3, 8}, {5, 8}, {6, 8}, {7, 8}, {8, 8},
-            {2, 7}, {8, 7},
-            {1, 6}, {2, 6}, {3, 6}, {4, 6}, {6, 6},
-            {3, 5}, {6, 5}, {7, 5}, {8, 5}, {9, 5},
-            {0, 4}, {1, 4}, {2, 4}, {3, 4}, {5, 4}, {6, 4},
-            {1, 3}, {3, 3}, {8, 3},
-            {3, 2}, {5, 2}, {6, 2}, {8, 2},
-            {1, 1}, {2, 1}, {3, 1}, {5, 1}, {6, 1}, {7, 1}, {8, 1},
-            /*{4, 0}, {3, 0}*/};
-
-        //Matriz vacia de ejemplo
-        //int[][] coor_vacias = new int[0][2];
+        int[][] mapa = crearMapa(10, "3000000010011101111000100000100111101000000100111111110110000101000010000101101001110111100000000004");
         
-        int[] pos_per = {0, 9};
-        int[] fin = {9, 0};
-
-        int[][] mapa = crearMapa(10, coor, pos_per, fin);
-        //Fin mapa prueba
+        int[] pos_per = hallarLandMark(mapa, 3);
+        int[] fin = hallarLandMark(mapa, 4);
 
         imprimirMapa(mapa);
 
@@ -169,17 +153,37 @@ public class AutoPathing {
         mapa[fin[0]][fin[1]] = 4;
     }
 
-    //Funcion que recibe los obstaculos prestablecidos y devuelve un mapa pronto para ser usado
-    public static int[][] crearMapa(int size, int[][] coor, int[] per, int[] fin) {
-        int[][] ret = new int[size][size];
-
-        for (int[] coor1 : coor) {
-            ret[coor1[0]][coor1[1]] = 1;
+    // Recibe un String con ceros, unos, un 3 y un 4. Y crea un mapa en base a ese String.
+    public static int[][] crearMapa(int size, String codigo) {
+        int[][] mapa = new int[size][size];
+        int cont = 0;
+        
+        for (int y = size - 1; y >= 0; y--) {
+            for (int x = 0; x < size; x++) {
+                if (cont < codigo.length()) {
+                    mapa[x][y] = Integer.parseInt("" + codigo.charAt(cont));
+                } else {
+                    mapa[x][y] = 0;
+                }
+                cont++;
+            }
         }
 
-        ret[per[0]][per[1]] = 3;
-        ret[fin[0]][fin[1]] = 4;
-
+        return mapa;
+    }
+    
+    public static int[] hallarLandMark(int[][] mapa, int a) {
+        int[] ret = new int[2];
+        
+        for (int y = 0; y < mapa.length; y++) {
+            for (int x = 0; x < mapa.length; x++) {
+                if (mapa[x][y] == a) {
+                    ret[0] = x;
+                    ret[1] = y;
+                }
+            }
+        }
+        
         return ret;
     }
 
