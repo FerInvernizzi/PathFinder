@@ -71,9 +71,10 @@ Ahora se modificó el código haciéndolo mucho más eficiente para estos casos 
 - 11 x 11 - 5s
 
 - 12 x 12 - 52s
+
 Si bien, nuevamente aumenta muy rapido el tiempo de ejecución en base al tamaño de la matriz. Con la modificación se logró poder superar areas de 9x9 sin un impacto notable en el tiempo de ejecución y tambíen se logró reducir la velocidad con la que aumenta en base al tamaño de la matriz, ya que en el experimento 1 pasaba de 5s a +18min y en este de 5s a 52s.
 
----
+
 ### Cambiamos el metodo de creacion de mapas.
 
 Ahora la funcion crear mapa recibe un string de ceros y unos para espacio vacio y muros, 3 para la posicion inicial y 4 para el destino, lo que nos permite crear mas rapidamente mapas para probar todos los casos que queramos.
