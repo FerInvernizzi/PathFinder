@@ -4,14 +4,16 @@ import autopathing.interfaz.Ventana;
 import java.util.ArrayList;
 
 public class PathFinder {
+
     private int[][] mapa;
     private Ventana v;
-    
+    private int largoCamino = -1;
+
     public PathFinder() {
         v = new Ventana(this);
         v.setVisible(true);
     }
-    
+
     // Recibe un String con ceros, unos, un 3 y un 4. Y crea un mapa en base a ese String.
     public void crearMapa(String codigo) {
         int size = (int) Math.sqrt(codigo.length());
@@ -29,18 +31,24 @@ public class PathFinder {
             }
         }
     }
-    
-    public ArrayList<int[]> buscarCamino(){
+
+    public ArrayList<int[]> buscarCamino() {
+        largoCamino = -1;
         return buscarCamino(hallarLandMark(3), new ArrayList<>());
     }
-    
+
     private ArrayList<int[]> buscarCamino(int[] coor, ArrayList<int[]> camino) {
         camino.add(coor);
 
         //Casos base
         if (mapa[coor[0]][coor[1]] == 4) {
+            if (!esMuyLargo(camino)) {
+                largoCamino = camino.size();
+            }
+
             return camino;
         }
+
         //Pasos recursivos
         mapa[coor[0]][coor[1]] = 2;
 
@@ -49,21 +57,23 @@ public class PathFinder {
         ArrayList<int[]> camino3 = new ArrayList<>();
         ArrayList<int[]> camino4 = new ArrayList<>();
 
-        if (checkIndex(coor[0], coor[1] + 1, mapa.length) && !checkObstaculo(coor[0], coor[1] + 1)) {
-            int[] nuevas_coord = {coor[0], coor[1] + 1};
-            camino1 = buscarCamino(nuevas_coord, (ArrayList<int[]>) camino.clone());
-        }
-        if (checkIndex(coor[0] - 1, coor[1], mapa.length) && !checkObstaculo(coor[0] - 1, coor[1])) {
-            int[] nuevas_coord = {coor[0] - 1, coor[1]};
-            camino2 = buscarCamino(nuevas_coord, (ArrayList<int[]>) camino.clone());
-        }
-        if (checkIndex(coor[0] + 1, coor[1], mapa.length) && !checkObstaculo(coor[0] + 1, coor[1])) {
-            int[] nuevas_coord = {coor[0] + 1, coor[1]};
-            camino3 = buscarCamino(nuevas_coord, (ArrayList<int[]>) camino.clone());
-        }
-        if (checkIndex(coor[0], coor[1] - 1, mapa.length) && !checkObstaculo(coor[0], coor[1] - 1)) {
-            int[] nuevas_coord = {coor[0], coor[1] - 1};
-            camino4 = buscarCamino(nuevas_coord, (ArrayList<int[]>) camino.clone());
+        if (!esMuyLargo(camino)) {
+            if (checkIndex(coor[0], coor[1] + 1, mapa.length) && !checkObstaculo(coor[0], coor[1] + 1)) {
+                int[] nuevas_coord = {coor[0], coor[1] + 1};
+                camino1 = buscarCamino(nuevas_coord, (ArrayList<int[]>) camino.clone());
+            }
+            if (checkIndex(coor[0] - 1, coor[1], mapa.length) && !checkObstaculo(coor[0] - 1, coor[1])) {
+                int[] nuevas_coord = {coor[0] - 1, coor[1]};
+                camino2 = buscarCamino(nuevas_coord, (ArrayList<int[]>) camino.clone());
+            }
+            if (checkIndex(coor[0] + 1, coor[1], mapa.length) && !checkObstaculo(coor[0] + 1, coor[1])) {
+                int[] nuevas_coord = {coor[0] + 1, coor[1]};
+                camino3 = buscarCamino(nuevas_coord, (ArrayList<int[]>) camino.clone());
+            }
+            if (checkIndex(coor[0], coor[1] - 1, mapa.length) && !checkObstaculo(coor[0], coor[1] - 1)) {
+                int[] nuevas_coord = {coor[0], coor[1] - 1};
+                camino4 = buscarCamino(nuevas_coord, (ArrayList<int[]>) camino.clone());
+            }
         }
 
         mapa[coor[0]][coor[1]] = 0;
@@ -71,9 +81,18 @@ public class PathFinder {
         ArrayList<int[]> finalista1 = caminoMasCorto(camino1, camino2);
         ArrayList<int[]> finalista2 = caminoMasCorto(camino3, camino4);
 
-        return caminoMasCorto(finalista1, finalista2); //A.K.A Ganador
+        return caminoMasCorto(finalista1, finalista2); 
     }
-    
+
+    // Retorna true si el camino actual es mas largo que el mejor camino encontrado hasta ahora
+    public boolean esMuyLargo(ArrayList<int[]> camino) {
+        if (largoCamino == -1) {
+            return false;
+        }
+
+        return largoCamino <= camino.size();
+    }
+
     //Retorna true si no hay espacios disponibles para seguir con su camino
     public boolean estaAcorralado(int[] coor) {
         boolean ret = true;
@@ -112,7 +131,7 @@ public class PathFinder {
     public boolean checkIndex(int x, int y, int max) {
         return x >= 0 && y >= 0 && x < max && y < max;
     }
-    
+
     //Retorna la posicion del ultimo int a que encuentra
     public int[] hallarLandMark(int a) {
         int[] ret = new int[2];
