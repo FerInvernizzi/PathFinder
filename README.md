@@ -2,13 +2,13 @@
 
 ## Programado por: Emilliano Yozzi y Fernando Invernizzi
 
-### Este proyecto tomo aproximadamente 5hrs.
+### Este proyecto tomó aproximadamente 5hrs.
 
-Estabamos muy aburridos y se me ocurrió la idea de programar un algoritmo de PathFinding. Cuando lo mencione, a Emi y a mi se nos iluminaron los ojos.
+Estábamos muy aburridos y se me ocurrió la idea de programar un algoritmo de PathFinding. Cuando lo mencioné, a Emi y a mi se nos iluminaron los ojos.
 
 Y lo hicimos!
 
-Cabe recalcar que no usamos algoritmos de guia, sino que el 100% del codigo fue craneado por nosotros.
+Cabe recalcar que no usamos algoritmos de guía, sino que el 100% del codigo fue craneado por nosotros.
 
 El objetivo de este proyecto es crear un algoritmo que, dado cualquier laberinto, sea capaz de encontrar y mostrar el camino que hay que seguir desde el punto de inicio hasta el punto final. En caso de que hayan varios caminos, mostrará siempre el más corto.
 
