@@ -5,11 +5,11 @@ import java.awt.Color;
 
 public class Ventana extends javax.swing.JFrame {
 
-    private PathFinder pf;
-    
+    private PathFinder pathFinder;
+
     public Ventana(PathFinder pf) {
         initComponents();
-        this.pf = pf;
+        this.pathFinder = pf;
     }
 
     @SuppressWarnings("unchecked")
@@ -302,6 +302,7 @@ public class Ventana extends javax.swing.JFrame {
         });
 
         txtGetCode.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        txtGetCode.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtGetCode.setText(" ");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -369,13 +370,13 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void txtSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSizeActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtSizeActionPerformed
 
     private void btnBuscarCaminoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCaminoActionPerformed
-        pf.crearMapa(tablero.generateCode());
+        pathFinder.crearMapa(tablero.generateCode());
         tablero.borrarCamino();
-        tablero.setCamino(pf.buscarCamino());
+        tablero.setCamino(pathFinder.buscarCamino());
         tablero.pintarCamino();
     }//GEN-LAST:event_btnBuscarCaminoActionPerformed
 
@@ -404,9 +405,7 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_txtLoadMapActionPerformed
 
     private void btnLoadMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadMapActionPerformed
-        if (tablero.verifyCode(txtLoadMap.getText())){
-            tablero.loadCode(txtLoadMap.getText());
-        }
+        tablero.loadCode(txtLoadMap.getText());
     }//GEN-LAST:event_btnLoadMapActionPerformed
 
     private void btnGetCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetCodeActionPerformed

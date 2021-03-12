@@ -20,12 +20,13 @@ public class Tablero extends javax.swing.JPanel implements MouseListener {
     private int[] coordStart = new int[2];
     private int[] coordEnd = new int[2];
 
-    public Tablero() {
+    public Tablero() { // Constructor
         initComponents();
         casillas = new JPanel[0][0];
         createGrid();
     }
 
+    // Genera un tablero nuevo vacío
     public void createGrid() {
         this.removeAll();
         this.setLayout(new GridLayout(gridSize, gridSize));
@@ -41,9 +42,16 @@ public class Tablero extends javax.swing.JPanel implements MouseListener {
                 this.add(casillas[i][j]);
             }
         }
+
+        coordStart[0] = -1;
+        coordStart[1] = -1;
+        coordEnd[0] = -1;
+        coordEnd[1] = -1;
+
         this.updateUI();
     }
 
+    //Retorna el código del mapa
     public String generateCode() {
         String ret = "";
 
@@ -65,42 +73,46 @@ public class Tablero extends javax.swing.JPanel implements MouseListener {
         return ret;
     }
 
-    //Condicion: Se asume que la raiz del largo de code es un natural.
+    // Recibe un codigo y genera el mapa en base a este
     public void loadCode(String code) {
-        if (Math.sqrt(code.length()) != gridSize) {
-            gridSize = (int) Math.sqrt(code.length());
-            createGrid();
-        }
+        if (verifyCode(code)) { // Se verifica que la raiz cuadrada de code.length() es un natural.
+            
+            if (Math.sqrt(code.length()) != gridSize) { // Si el mapa no es del largo correcto, se crea un mapa adecuado.
+                gridSize = (int) Math.sqrt(code.length());
+                createGrid();
+            }
 
-        int cont = 0;
-
-        for (int i = 0; i < casillas.length; i++) {
-            for (int j = 0; j < casillas.length; j++) {
-                switch (code.charAt(cont)) {
-                    case '1':
-                        casillas[i][j].setBackground(pared);
-                        break;
-                    case '3':
-                        casillas[i][j].setBackground(start);
-                        break;
-                    case '4':
-                        casillas[i][j].setBackground(end);
-                        break;
-                    default:
-                        casillas[i][j].setBackground(piso);
-                        break;
+            int cont = 0;
+            for (int i = 0; i < casillas.length; i++) {
+                for (int j = 0; j < casillas.length; j++) {
+                    switch (code.charAt(cont)) {
+                        case '1':
+                            casillas[i][j].setBackground(pared);
+                            break;
+                        case '3':
+                            casillas[i][j].setBackground(start);
+                            break;
+                        case '4':
+                            casillas[i][j].setBackground(end);
+                            break;
+                        default:
+                            casillas[i][j].setBackground(piso);
+                            break;
+                    }
+                    cont++;
                 }
-                cont++;
             }
         }
     }
 
+    // Verifica que la raiz cuadrada de code.length() es un natural.
     public boolean verifyCode(String code) {
         double aux = Math.sqrt(code.length());
         int aux2 = (int) aux;
         return aux - aux2 == 0;
     }
 
+    // Basandose en el atributo camino, pinta de amarillo el camino entre el inicio y el final.
     public void pintarCamino() {
         for (int i = 1; i < camino.size() - 1; i++) {
             casillas[camino.get(i)[1]][camino.get(i)[0]].setBackground(new Color(250, 230, 0));
@@ -108,6 +120,7 @@ public class Tablero extends javax.swing.JPanel implements MouseListener {
         mostrandoCamino = true;
     }
 
+    // Basandose en el atributo camino, pinta de verde el camino entre el inicio y el final.
     public void borrarCamino() {
         if (mostrandoCamino) {
             for (int i = 1; i < camino.size() - 1; i++) {
@@ -146,17 +159,17 @@ public class Tablero extends javax.swing.JPanel implements MouseListener {
         if (mousePressed) {
             int[] coord = getCoord(((JPanel) me.getSource()).getName());
 
-            if (coord[0] == coordStart[0] && coord[1] == coordStart[1]) {
+            if (coord[0] == coordStart[0] && coord[1] == coordStart[1]) { // Si se hizo clic en el punto de inicio, se setean las cordenadas de inicio en (-1, -1).
                 coordStart[0] = -1;
                 coordStart[1] = -1;
             }
 
-            if (coord[0] == coordEnd[0] && coord[1] == coordEnd[1]) {
+            if (coord[0] == coordEnd[0] && coord[1] == coordEnd[1]) { // Si se hizo clic en el punto de final, se setean las cordenadas de final en (-1, -1).
                 coordEnd[0] = -1;
                 coordEnd[1] = -1;
             }
 
-            if (selectedColor.equals(start)) {
+            if (selectedColor.equals(start)) { // Si se va a colocar un nuevo inicio, se borra el anterior y se actualizan las nuevas coordenadas.
                 if (coordStart[0] != -1) {
                     casillas[coordStart[0]][coordStart[1]].setBackground(piso);
                 }
@@ -164,19 +177,20 @@ public class Tablero extends javax.swing.JPanel implements MouseListener {
                 coordStart[1] = coord[1];
             }
 
-            if (selectedColor.equals(end)) {
+            if (selectedColor.equals(end)) { // Si se va a colocar un nuevo final, se borra el anterior y se actualizan las nuevas coordenadas.
                 if (coordEnd[0] != -1) {
                     casillas[coordEnd[0]][coordEnd[1]].setBackground(piso);
                 }
                 coordEnd[0] = coord[0];
                 coordEnd[1] = coord[1];
             }
-            
+
             borrarCamino();
             casillas[coord[0]][coord[1]].setBackground(selectedColor);
         }
     }
 
+    // Recibe un String de la forma "<int>,<int>" y lo traduce a coordenadas para usar en la matriz.
     private int[] getCoord(String name) {
         int[] ret = new int[2];
 

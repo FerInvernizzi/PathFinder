@@ -6,12 +6,12 @@ import java.util.ArrayList;
 public class PathFinder {
 
     private int[][] mapa;
-    private Ventana v;
+    private Ventana ventana;
     private int largoCamino = -1;
 
     public PathFinder() {
-        v = new Ventana(this);
-        v.setVisible(true);
+        ventana = new Ventana(this);
+        ventana.setVisible(true);
     }
 
     // Recibe un String con ceros, unos, un 3 y un 4. Y crea un mapa en base a ese String.
@@ -32,16 +32,17 @@ public class PathFinder {
         }
     }
 
+    // Retorna una lista con las coordenadas que dibujan el camino mas eficiente para llegar al destino
     public ArrayList<int[]> buscarCamino() {
         largoCamino = -1;
         return buscarCamino(hallarLandMark(3), new ArrayList<>());
     }
 
+    // Retorna una lista con las coordenadas que dibujan el camino mas eficiente para llegar al destino
     private ArrayList<int[]> buscarCamino(int[] coor, ArrayList<int[]> camino) {
         camino.add(coor);
 
-        //Casos base
-        if (mapa[coor[0]][coor[1]] == 4) {
+        if (mapa[coor[0]][coor[1]] == 4) { 
             if (!esMuyLargo(camino)) {
                 largoCamino = camino.size();
             }
@@ -49,7 +50,6 @@ public class PathFinder {
             return camino;
         }
 
-        //Pasos recursivos
         mapa[coor[0]][coor[1]] = 2;
 
         ArrayList<int[]> camino1 = new ArrayList<>();
@@ -58,19 +58,19 @@ public class PathFinder {
         ArrayList<int[]> camino4 = new ArrayList<>();
 
         if (!esMuyLargo(camino)) {
-            if (checkIndex(coor[0], coor[1] + 1, mapa.length) && !checkObstaculo(coor[0], coor[1] + 1)) {
+            if (checkIndex(coor[0], coor[1] + 1, mapa.length) && !checkObstaculo(coor[0], coor[1] + 1)) { // Checkea si es posible ir hacia abajo
                 int[] nuevas_coord = {coor[0], coor[1] + 1};
                 camino1 = buscarCamino(nuevas_coord, (ArrayList<int[]>) camino.clone());
             }
-            if (checkIndex(coor[0] - 1, coor[1], mapa.length) && !checkObstaculo(coor[0] - 1, coor[1])) {
+            if (checkIndex(coor[0] - 1, coor[1], mapa.length) && !checkObstaculo(coor[0] - 1, coor[1])) { // Checkea si es posible ir hacia la izquierda
                 int[] nuevas_coord = {coor[0] - 1, coor[1]};
                 camino2 = buscarCamino(nuevas_coord, (ArrayList<int[]>) camino.clone());
             }
-            if (checkIndex(coor[0] + 1, coor[1], mapa.length) && !checkObstaculo(coor[0] + 1, coor[1])) {
+            if (checkIndex(coor[0] + 1, coor[1], mapa.length) && !checkObstaculo(coor[0] + 1, coor[1])) { // Checkea si es posible ir hacia la derecha
                 int[] nuevas_coord = {coor[0] + 1, coor[1]};
                 camino3 = buscarCamino(nuevas_coord, (ArrayList<int[]>) camino.clone());
             }
-            if (checkIndex(coor[0], coor[1] - 1, mapa.length) && !checkObstaculo(coor[0], coor[1] - 1)) {
+            if (checkIndex(coor[0], coor[1] - 1, mapa.length) && !checkObstaculo(coor[0], coor[1] - 1)) { // Checkea si es posible ir hacia arriba
                 int[] nuevas_coord = {coor[0], coor[1] - 1};
                 camino4 = buscarCamino(nuevas_coord, (ArrayList<int[]>) camino.clone());
             }
@@ -78,7 +78,7 @@ public class PathFinder {
 
         mapa[coor[0]][coor[1]] = 0;
 
-        ArrayList<int[]> finalista1 = caminoMasCorto(camino1, camino2);
+        ArrayList<int[]> finalista1 = caminoMasCorto(camino1, camino2); // Comparamos los posibles caminos y nos quedamos con el mas corto.
         ArrayList<int[]> finalista2 = caminoMasCorto(camino3, camino4);
 
         return caminoMasCorto(finalista1, finalista2); 
