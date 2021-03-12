@@ -41,3 +41,11 @@ Tamaño - Tiempo que tarda en ejecutarlo
 ---
 
 Todas las funciones estan comentadas en español asi que, en caso de querer saber como funciona, leerlo.
+
+DevLog (11.03.2021, 8:36pm)
+
+### Cambiamos el metodo de creacion de mapas.
+
+Ahora la funcion crear mapa recibe un string de ceros y unos para espacio vacio y muros, 3 para la posicion inicial y 4 para el destino, lo que nos permite crear mas rapidamente mapas para probar todos los casos que queramos.
+
+Un par de alteraciones menores nacieron a raiz de este cambio, como los parametros que le pasamos a la funcion recursiva, entre otras cosas.
