@@ -8,7 +8,7 @@ Estábamos muy aburridos y se me ocurrió la idea de programar un algoritmo de P
 
 Y lo hicimos!
 
-Cabe recalcar que no usamos algoritmos de guía, sino que el 100% del codigo fue craneado por nosotros.
+Cabe recalcar que no usamos algoritmos de guía, sino que el 100% del código fue craneado por nosotros.
 
 El objetivo de este proyecto es crear un algoritmo que, dado cualquier laberinto, sea capaz de encontrar y mostrar el camino que hay que seguir desde el punto de inicio hasta el punto final. En caso de que hayan varios caminos, mostrará siempre el más corto.
 
@@ -71,8 +71,8 @@ Ahora se modificó el código haciéndolo mucho más eficiente para estos casos 
 - 11 x 11 - 5s
 
 - 12 x 12 - 52s
-
 Si bien, nuevamente aumenta muy rapido el tiempo de ejecución en base al tamaño de la matriz. Con la modificación se logró poder superar areas de 9x9 sin un impacto notable en el tiempo de ejecución y tambíen se logró reducir la velocidad con la que aumenta en base al tamaño de la matriz, ya que en el experimento 1 pasaba de 5s a +18min y en este de 5s a 52s.
+
 ---
 ### Cambiamos el metodo de creacion de mapas.
 
