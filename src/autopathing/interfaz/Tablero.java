@@ -122,8 +122,11 @@ public class Tablero extends javax.swing.JPanel implements MouseListener {
     // Basandose en el atributo camino, pinta de verde el camino entre el inicio y el final.
     public void borrarCamino() {
         if (mostrandoCamino) {
-            for (int i = 1; i < camino.size() - 1; i++) {
-                casillas[camino.get(i)[1]][camino.get(i)[0]].setBackground(piso);
+            try {
+                for (int i = 1; i < camino.size() - 1; i++) {
+                    casillas[camino.get(i)[1]][camino.get(i)[0]].setBackground(piso);
+                }
+            } catch (Exception e) {
             }
         }
         mostrandoCamino = false;
