@@ -26,7 +26,7 @@ El botón "Obtener mapa" te brinda un código que representa el mapa que dibujas
 - Se espera que el punto de inicio y final existan en el tablero antes de intentar buscar el camino. 
 ### Observaciones:
 
-- Nuestro algoritmo recorre en forma recursiva todos los posibles caminos y luego compara los caminos que llegaron a la meta y se queda con el más corto. En caso de que hayan espacios vacios en la matriz de 2 x 2, el algoritmo pierde eficiencia, dado que tiene que recorrer los mismos caminos, pero con alguna leve variación. 
+- Nuestro algoritmo recorre en forma recursiva todos los posibles caminos y luego compara los caminos que llegaron a la meta y se queda con el más corto. En caso de que hayan espacios vacios de 2 x 2, el algoritmo pierde eficiencia, dado que tiene que recorrer los mismos caminos, pero con alguna leve variación. 
 
 - Cuanto más grandes son los espacios vacíos, más posibles caminos tiene que calcular el algoritmo.
 
