@@ -76,7 +76,6 @@ public class Tablero extends javax.swing.JPanel implements MouseListener {
     // Recibe un codigo y genera el mapa en base a este
     public void loadCode(String code) {
         if (verifyCode(code)) { // Se verifica que la raiz cuadrada de code.length() es un natural.
-            
             if (Math.sqrt(code.length()) != gridSize) { // Si el mapa no es del largo correcto, se crea un mapa adecuado.
                 gridSize = (int) Math.sqrt(code.length());
                 createGrid();

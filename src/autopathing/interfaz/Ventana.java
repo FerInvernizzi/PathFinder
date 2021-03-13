@@ -405,11 +405,9 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_txtLoadMapActionPerformed
 
     private void btnLoadMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadMapActionPerformed
-        try {
-            Integer.parseInt(txtLoadMap.getText()); // Compruebo que solo hayan números
+        if (txtLoadMap.getText().matches("^[0-9]*")) { // Compruebo que solo hayan números
             tablero.loadCode(txtLoadMap.getText());
-        } catch (NumberFormatException e) {}
-        
+        }
     }//GEN-LAST:event_btnLoadMapActionPerformed
 
     private void btnGetCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetCodeActionPerformed
