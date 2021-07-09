@@ -177,6 +177,7 @@ public class Tablero extends javax.swing.JPanel implements MouseListener {
                 }
                 coordStart[0] = coord[0];
                 coordStart[1] = coord[1];
+                
             }
 
             if (selectedColor.equals(end)) { // Si se va a colocar un nuevo final, se borra el anterior y se actualizan las nuevas coordenadas.

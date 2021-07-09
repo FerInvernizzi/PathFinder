@@ -2,13 +2,13 @@ package autopathing;
 
 import autopathing.interfaz.Ventana;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PathFinder {
 
     private int[][] mapa;
     private Ventana ventana;
     private int largoCamino = -1;
+    private int[][] matrizDistancias;
 
     public PathFinder() {
         ventana = new Ventana(this);
@@ -36,12 +36,14 @@ public class PathFinder {
     // Retorna una lista con las coordenadas que dibujan el camino mas eficiente para llegar al destino
     public ArrayList<int[]> buscarCamino() {
         largoCamino = -1;
+        iniciarMatrizDeDistancias();
         return buscarCamino(hallarLandMark(3), hallarLandMark(4), new ArrayList<>());
     }
 
     // Retorna una lista con las coordenadas que dibujan el camino más corto para llegar al destino
     private ArrayList<int[]> buscarCamino(int[] coorA, int[] coorD, ArrayList<int[]> camino) {
         camino.add(coorA);
+        matrizDistancias[coorA[0]][coorA[1]] = camino.size();
 
         if (mapa[coorA[0]][coorA[1]] == 4) {
             if (!esMuyLargo(camino)) {
@@ -122,9 +124,13 @@ public class PathFinder {
     }
 
     public ArrayList<int[]> buscarCaminoRecCall(int coorX, int coorY, int[] coorD, ArrayList<int[]> camino) {
-        if (checkIndex(coorX, coorY, mapa.length) && !checkObstaculo(coorX, coorY)) { // Checkea si esa casilla es "caminable"
-            int[] nuevasCoord = {coorX, coorY};
-            return buscarCamino(nuevasCoord, coorD, (ArrayList<int[]>) camino.clone());
+        if (checkIndex(coorX, coorY, mapa.length)) {
+            boolean noHayObstaculo = !checkObstaculo(coorX, coorY);
+            boolean esUnCaminoMasCorto = camino.size() + 1 < matrizDistancias[coorX][coorY];
+            if (noHayObstaculo && esUnCaminoMasCorto) { // Checkea si esa casilla es "caminable" y vale la pena ir
+                int[] nuevasCoord = {coorX, coorY};
+                return buscarCamino(nuevasCoord, coorD, (ArrayList<int[]>) camino.clone());
+            }
         }
         return new ArrayList<>();
     }
@@ -190,4 +196,14 @@ public class PathFinder {
         }
         return ret;
     }
+
+    public void iniciarMatrizDeDistancias() {
+        matrizDistancias = new int[mapa.length][mapa[0].length];
+        for (int i = 0; i < mapa.length; i++) {
+            for (int j = 0; j < mapa[0].length; j++) {
+                matrizDistancias[i][j] = Integer.MAX_VALUE;
+            }
+        }
+    }
+
 }
